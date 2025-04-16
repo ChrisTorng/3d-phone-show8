@@ -6,23 +6,23 @@ const phoneModels = {
         path: 'models/iphone_16_pro_max.glb',
         name: 'iPhone 16 Pro Max',
         description: '這是一款最新的 iPhone 智慧型手機，擁有強大的處理效能和專業級相機系統。',
-        scale: 1.5,
+        scale: 3,
         position: { x: 0, y: 0, z: 0 },
-        rotation: { x: 0, y: 0, z: 0 }
+        rotation: { x: 0, y: Math.PI / 2, z: 0 } // 向左旋轉 90 度
     },
     samsung_galaxy_s22_ultra: {
         path: 'models/samsung_galaxy_s22_ultra.glb',
         name: 'Samsung Galaxy S22 Ultra',
         description: '這是三星旗艦級手機，擁有 S Pen 觸控筆和 108MP 高解析度相機。',
-        scale: 1.5,
-        position: { x: 0, y: 0, z: 0 },
+        scale: 1.1,
+        position: { x: 0, y: -3, z: 0 },
         rotation: { x: 0, y: 0, z: 0 }
     },
     Samsung_Galaxy_Z_Flip_3: {
         path: 'models/Samsung_Galaxy_Z_Flip_3.glb',
         name: 'Samsung Galaxy Z Flip 3',
         description: '這是一款創新的摺疊智慧型手機，結合了復古翻蓋設計與現代科技。',
-        scale: 1.5,
+        scale: 6,
         position: { x: 0, y: 0, z: 0 },
         rotation: { x: 0, y: 0, z: 0 }
     }

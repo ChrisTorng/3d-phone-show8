@@ -8,4 +8,8 @@
 8. Agent: 請將所有 html/js 裡寫死資料移到獨立的 JSON 資料檔。
 9. Agent: 請使用 Python Flask 建立網站，可以服務目前的網頁及相關資源檔，還有 JSON 檔下載。
 10. Ask: @mermAId /sequence
-11. 
+
+```cmd
+python index.py
+uv pip freeze > requirements.txt
+```

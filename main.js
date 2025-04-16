@@ -27,6 +27,42 @@ const phoneModels = {
         rotation: { x: 0, y: 0, z: 0 }
     }
 };
+const phoneSpecs = {
+    "iphone_16_pro_max": {
+        "螢幕": "6.7 吋 Super Retina XDR 顯示器",
+        "處理器": "A18 Pro 晶片",
+        "主相機": "4800 萬畫素三鏡頭（廣角、超廣角、望遠）",
+        "前相機": "1200 萬畫素",
+        "記憶體": "8GB RAM",
+        "儲存空間": "256GB/512GB/1TB",
+        "電池續航": "約 29 小時影片播放",
+        "防水防塵": "IP68",
+        "連接埠": "USB-C",
+        "其他": "支援 MagSafe、Face ID、5G、Wi-Fi 7"
+    },
+    "samsung_galaxy_s22_ultra": {
+        "螢幕": "6.8 吋 QHD+ Dynamic AMOLED 2X，120Hz",
+        "處理器": "Snapdragon 8 Gen 1",
+        "主相機": "1.08 億畫素四鏡頭（廣角、超廣角、兩顆望遠）",
+        "前相機": "4000 萬畫素",
+        "記憶體": "8GB/12GB RAM",
+        "儲存空間": "128GB/256GB/512GB/1TB",
+        "電池容量": "5000mAh",
+        "防水防塵": "IP68",
+        "其他": "支援 S Pen、5G、Wi-Fi 6E"
+    },
+    "Samsung_Galaxy_Z_Flip_3": {
+        "螢幕": "6.7 吋 FHD+ Dynamic AMOLED 2X（主螢幕），1.9 吋 Super AMOLED（外螢幕）",
+        "處理器": "Snapdragon 888",
+        "主相機": "1200 萬畫素雙鏡頭（廣角、超廣角）",
+        "前相機": "1000 萬畫素",
+        "記憶體": "8GB RAM",
+        "儲存空間": "128GB/256GB",
+        "電池容量": "3300mAh",
+        "防水防塵": "IPX8",
+        "其他": "支援 5G、Wi-Fi 6"
+    }
+};
 let currentModel = 'iphone_16_pro_max';
 let isLoading = false;
 
@@ -117,7 +153,8 @@ function loadPhoneModel(modelId) {
     // 更新手機資訊
     document.getElementById('phone-name').textContent = model.name;
     document.getElementById('phone-description').textContent = model.description;
-    
+    updatePhoneSpecs(modelId);
+
     // 更新選擇按鈕的活動狀態
     document.querySelectorAll('.model-btn').forEach(btn => {
         btn.classList.remove('active');
@@ -172,6 +209,20 @@ function loadPhoneModel(modelId) {
         document.querySelector('.loading-indicator').style.display = 'none';
         isLoading = false;
     });
+}
+
+// 輔助函式：根據目前手機顯示詳細規格
+function updatePhoneSpecs(modelId) {
+    const specs = phoneSpecs[modelId];
+    const descElem = document.getElementById('phone-description');
+    if (specs) {
+        let html = '<ul style="margin-top: 1em;">';
+        for (const key in specs) {
+            html += `<li><strong>${key}：</strong>${specs[key]}</li>`;
+        }
+        html += '</ul>';
+        descElem.innerHTML = html;
+    }
 }
 
 // 視窗大小變化時調整畫面

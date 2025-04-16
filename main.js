@@ -1,70 +1,10 @@
-// 初始化變數
+// 移除 phoneModels 與 phoneSpecs，改為 fetch 載入 JSON
 let scene, camera, renderer, controls, phoneModel;
 let loadingManager, gltfLoader;
-const phoneModels = {
-    iphone_16_pro_max: {
-        path: 'models/iphone_16_pro_max.glb',
-        name: 'iPhone 16 Pro Max',
-        description: '這是一款最新的 iPhone 智慧型手機，擁有強大的處理效能和專業級相機系統。',
-        scale: 3,
-        position: { x: 0, y: 0, z: 0 },
-        rotation: { x: 0, y: Math.PI / 2, z: 0 } // 向左旋轉 90 度
-    },
-    samsung_galaxy_s22_ultra: {
-        path: 'models/samsung_galaxy_s22_ultra.glb',
-        name: 'Samsung Galaxy S22 Ultra',
-        description: '這是三星旗艦級手機，擁有 S Pen 觸控筆和 108MP 高解析度相機。',
-        scale: 1.1,
-        position: { x: 0, y: -3, z: 0 },
-        rotation: { x: 0, y: 0, z: 0 }
-    },
-    Samsung_Galaxy_Z_Flip_3: {
-        path: 'models/Samsung_Galaxy_Z_Flip_3.glb',
-        name: 'Samsung Galaxy Z Flip 3',
-        description: '這是一款創新的摺疊智慧型手機，結合了復古翻蓋設計與現代科技。',
-        scale: 6,
-        position: { x: 0, y: 0, z: 0 },
-        rotation: { x: 0, y: 0, z: 0 }
-    }
-};
-const phoneSpecs = {
-    "iphone_16_pro_max": {
-        "螢幕": "6.7 吋 Super Retina XDR 顯示器",
-        "處理器": "A18 Pro 晶片",
-        "主相機": "4800 萬畫素三鏡頭（廣角、超廣角、望遠）",
-        "前相機": "1200 萬畫素",
-        "記憶體": "8GB RAM",
-        "儲存空間": "256GB/512GB/1TB",
-        "電池續航": "約 29 小時影片播放",
-        "防水防塵": "IP68",
-        "連接埠": "USB-C",
-        "其他": "支援 MagSafe、Face ID、5G、Wi-Fi 7"
-    },
-    "samsung_galaxy_s22_ultra": {
-        "螢幕": "6.8 吋 QHD+ Dynamic AMOLED 2X，120Hz",
-        "處理器": "Snapdragon 8 Gen 1",
-        "主相機": "1.08 億畫素四鏡頭（廣角、超廣角、兩顆望遠）",
-        "前相機": "4000 萬畫素",
-        "記憶體": "8GB/12GB RAM",
-        "儲存空間": "128GB/256GB/512GB/1TB",
-        "電池容量": "5000mAh",
-        "防水防塵": "IP68",
-        "其他": "支援 S Pen、5G、Wi-Fi 6E"
-    },
-    "Samsung_Galaxy_Z_Flip_3": {
-        "螢幕": "6.7 吋 FHD+ Dynamic AMOLED 2X（主螢幕），1.9 吋 Super AMOLED（外螢幕）",
-        "處理器": "Snapdragon 888",
-        "主相機": "1200 萬畫素雙鏡頭（廣角、超廣角）",
-        "前相機": "1000 萬畫素",
-        "記憶體": "8GB RAM",
-        "儲存空間": "128GB/256GB",
-        "電池容量": "3300mAh",
-        "防水防塵": "IPX8",
-        "其他": "支援 5G、Wi-Fi 6"
-    }
-};
-let currentModel = 'iphone_16_pro_max';
+let phoneModels = {};
+let currentModel = '';
 let isLoading = false;
+let modelsData = [];
 
 // 設定場景
 function initScene() {
@@ -128,14 +68,45 @@ function initScene() {
     // 初始化 GLTF 載入器
     gltfLoader = new THREE.GLTFLoader(loadingManager);
     
-    // 載入初始手機模型
-    loadPhoneModel(currentModel);
+    // 載入 JSON 資料
+    fetch('phones.json')
+        .then(res => res.json())
+        .then(data => {
+            modelsData = data.models;
+            // 以第一支手機為預設
+            phoneModels = {};
+            data.models.forEach(model => {
+                phoneModels[model.id] = model;
+            });
+            currentModel = data.models[0].id;
+            // 動態產生選擇按鈕
+            renderModelButtons();
+            loadPhoneModel(currentModel);
+        });
 
     // 設定視窗大小變化事件
     window.addEventListener('resize', onWindowResize);
 
     // 啟動動畫迴圈
     animate();
+}
+
+// 動態產生手機選擇按鈕
+function renderModelButtons() {
+    const selection = document.querySelector('.model-selection');
+    selection.innerHTML = '';
+    modelsData.forEach(model => {
+        const btn = document.createElement('button');
+        btn.className = 'model-btn' + (model.id === currentModel ? ' active' : '');
+        btn.dataset.model = model.id;
+        btn.textContent = model.name;
+        btn.addEventListener('click', () => {
+            if (model.id !== currentModel && !isLoading) {
+                loadPhoneModel(model.id);
+            }
+        });
+        selection.appendChild(btn);
+    });
 }
 
 // 載入手機模型
@@ -149,12 +120,10 @@ function loadPhoneModel(modelId) {
     }
     
     const model = phoneModels[modelId];
-    
     // 更新手機資訊
     document.getElementById('phone-name').textContent = model.name;
     document.getElementById('phone-description').textContent = model.description;
-    updatePhoneSpecs(modelId);
-
+    updatePhoneSpecs(model);
     // 更新選擇按鈕的活動狀態
     document.querySelectorAll('.model-btn').forEach(btn => {
         btn.classList.remove('active');
@@ -212,8 +181,8 @@ function loadPhoneModel(modelId) {
 }
 
 // 輔助函式：根據目前手機顯示詳細規格
-function updatePhoneSpecs(modelId) {
-    const specs = phoneSpecs[modelId];
+function updatePhoneSpecs(model) {
+    const specs = model.specs;
     const descElem = document.getElementById('phone-description');
     if (specs) {
         let html = '<ul style="margin-top: 1em;">';
@@ -257,16 +226,6 @@ function setupControls() {
     
     document.getElementById('zoom-out').addEventListener('click', () => {
         camera.position.z = Math.min(camera.position.z + 0.5, 10);
-    });
-    
-    // 模型選擇控制
-    document.querySelectorAll('.model-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const modelId = btn.dataset.model;
-            if (modelId !== currentModel && !isLoading) {
-                loadPhoneModel(modelId);
-            }
-        });
     });
 }
 

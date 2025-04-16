@@ -16,11 +16,7 @@
     
     <main>
         <div class="container">
-            <div class="model-selection">
-                <button class="model-btn active" data-model="iphone_16_pro_max">iPhone 16 Pro Max</button>
-                <button class="model-btn" data-model="samsung_galaxy_s22_ultra">Samsung Galaxy S22 Ultra</button>
-                <button class="model-btn" data-model="Samsung_Galaxy_Z_Flip_3">Samsung Galaxy Z Flip 3</button>
-            </div>
+            <div class="model-selection"><!-- 由 JS 動態產生 --></div>
             <div class="controls">
                 <button id="rotate-left">向左旋轉</button>
                 <button id="rotate-right">向右旋轉</button>
@@ -32,7 +28,7 @@
             </div>
             <div class="phone-info">
                 <h2 id="phone-name">智慧型手機</h2>
-                <p id="phone-description">這是一款最新的智慧型手機，具有出色的效能和絕佳的相機。</p>
+                <p id="phone-description"></p>
             </div>
         </div>
     </main>

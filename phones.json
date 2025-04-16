@@ -1,0 +1,65 @@
+{
+  "models": [
+    {
+      "id": "iphone_16_pro_max",
+      "path": "models/iphone_16_pro_max.glb",
+      "name": "iPhone 16 Pro Max",
+      "description": "這是一款最新的 iPhone 智慧型手機，擁有強大的處理效能和專業級相機系統。",
+      "scale": 3,
+      "position": { "x": 0, "y": 0, "z": 0 },
+      "rotation": { "x": 0, "y": 1.5707963267948966, "z": 0 },
+      "specs": {
+        "螢幕": "6.7 吋 Super Retina XDR 顯示器",
+        "處理器": "A18 Pro 晶片",
+        "主相機": "4800 萬畫素三鏡頭（廣角、超廣角、望遠）",
+        "前相機": "1200 萬畫素",
+        "記憶體": "8GB RAM",
+        "儲存空間": "256GB/512GB/1TB",
+        "電池續航": "約 29 小時影片播放",
+        "防水防塵": "IP68",
+        "連接埠": "USB-C",
+        "其他": "支援 MagSafe、Face ID、5G、Wi-Fi 7"
+      }
+    },
+    {
+      "id": "samsung_galaxy_s22_ultra",
+      "path": "models/samsung_galaxy_s22_ultra.glb",
+      "name": "Samsung Galaxy S22 Ultra",
+      "description": "這是三星旗艦級手機，擁有 S Pen 觸控筆和 108MP 高解析度相機。",
+      "scale": 1.1,
+      "position": { "x": 0, "y": -3, "z": 0 },
+      "rotation": { "x": 0, "y": 0, "z": 0 },
+      "specs": {
+        "螢幕": "6.8 吋 QHD+ Dynamic AMOLED 2X，120Hz",
+        "處理器": "Snapdragon 8 Gen 1",
+        "主相機": "1.08 億畫素四鏡頭（廣角、超廣角、兩顆望遠）",
+        "前相機": "4000 萬畫素",
+        "記憶體": "8GB/12GB RAM",
+        "儲存空間": "128GB/256GB/512GB/1TB",
+        "電池容量": "5000mAh",
+        "防水防塵": "IP68",
+        "其他": "支援 S Pen、5G、Wi-Fi 6E"
+      }
+    },
+    {
+      "id": "Samsung_Galaxy_Z_Flip_3",
+      "path": "models/Samsung_Galaxy_Z_Flip_3.glb",
+      "name": "Samsung Galaxy Z Flip 3",
+      "description": "這是一款創新的摺疊智慧型手機，結合了復古翻蓋設計與現代科技。",
+      "scale": 6,
+      "position": { "x": 0, "y": 0, "z": 0 },
+      "rotation": { "x": 0, "y": 0, "z": 0 },
+      "specs": {
+        "螢幕": "6.7 吋 FHD+ Dynamic AMOLED 2X（主螢幕），1.9 吋 Super AMOLED（外螢幕）",
+        "處理器": "Snapdragon 888",
+        "主相機": "1200 萬畫素雙鏡頭（廣角、超廣角）",
+        "前相機": "1000 萬畫素",
+        "記憶體": "8GB RAM",
+        "儲存空間": "128GB/256GB",
+        "電池容量": "3300mAh",
+        "防水防塵": "IPX8",
+        "其他": "支援 5G、Wi-Fi 6"
+      }
+    }
+  ]
+}
